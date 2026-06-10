@@ -1,116 +1,62 @@
+// leetcode 57
+
 import java.util.*;
 
 class Solution {
 	public int[][] insert(int[][] intervals, int[] newInterval) {
-		if (intervals.length == 0) {
-			return new int[][] {newInterval};
-		}
-		
-		boolean flag = false;
-		int start, end;
-		int newStart = newInterval[0];
-		int newEnd   = newInterval[1];
-		int[] lastInserted, currInterval;
+
+		// first insert the interval into its right position
 		List<int[]> inserted = new ArrayList<>();
-		
-		// insert into the array
-		inserted.add(new int[] {0, 0});
-		for (int i = 0; i < intervals.length; i++) {
-			currInterval = intervals[i];
-			start = currInterval[0];
-			end   = currInterval[1];
-			
-			lastInserted = inserted.get(inserted.size() - 1);
-			if (newStart >= lastInserted[0] && newStart <= start) {
-				inserted.add(newInterval);
-				flag = true;
+
+		boolean done = false;
+		for (int[] interval : intervals) {
+			if (!done) {
+				// insert when new interval start is less than the current interval
+				if (newInterval[0] < interval[0]) {
+					inserted.add(newInterval);
+					done = true;
+				}
 			}
-			
-			inserted.add(currInterval);
+			inserted.add(interval);
 		}
-		
-		if (!flag) {
+
+		if (!done) {
 			inserted.add(newInterval);
 		}
-		
-		for (int[] x: inserted) {
-			System.out.println(Arrays.toString(x));
-		}
-		
+
+		// now merge the intervals
 		List<int[]> merged = new ArrayList<>();
-		merged.add(inserted.get(1));
-		
-		// fix overlaps
-		int prevStart, prevEnd;
-		for (int i = 2; i < inserted.size(); i++) {
-			currInterval = inserted.get(i);
-			System.out.println("processing currInterval: " + Arrays.toString(currInterval));
-			start = currInterval[0];
-			end   = currInterval[1];
-			
-			prevStart = merged.get(merged.size() - 1)[0];
-			prevEnd   = merged.get(merged.size() - 1)[1];
-			
-			if (prevEnd >= start) {
-				System.out.println("before merge valeu: " + Arrays.toString(merged.get(merged.size() - 1)));
+		merged.add(inserted.get(0));
+		for (int i = 1; i < inserted.size(); i++) {
+			int[] a = merged.get(merged.size() - 1);
+			int[] b = inserted.get(i);
+			// conflict example a [1,3] b [2,5]
+			if (b[0] <= a[1]) {
+				int[] c = {Math.min(a[0], b[0]), Math.max(a[1], b[1])};
 				merged.remove(merged.size() - 1);
-				merged.add(new int[] {Math.min(prevStart, start), Math.max(prevEnd, end)});
-				System.out.println("after merge valeu: " + Arrays.toString(merged.get(merged.size() - 1)));
+				merged.add(c);
 			} else {
-				merged.add(currInterval);
-				System.out.println("normal adding to  merge: " + Arrays.toString(merged.get(merged.size() - 1)));
+				merged.add(b);
 			}
 		}
-		
+
 		return merged.toArray(new int[merged.size()][]);
 	}
 }
 
+
 class Main {
 	public static void main(String[] args) {
 		Solution obj = new Solution();
-		Test tester = new Test();
-		
-		int[][] intervals = new int[][] {{1,3},{6,9}};
-		int[] newInterval = new int[] {2,5};
-		// int[][] res = obj.insert(intervals, newInterval);
-// 		for(int[] a: res) {
-// 			System.out.println(Arrays.toString(a));
-// 		}
-//
-// 		intervals = new int[][] {{1,2},{3,5},{6,7},{8,10},{12,16}};
-// 		newInterval = new int[] {4,8};
-// 		res = obj.insert(intervals, newInterval);
-// 		for(int[] a: res) {
-// 			System.out.println(Arrays.toString(a));
-// 		}
-//
-// 		intervals = new int[][] {};
-// 		newInterval = new int[] {5,7};
-// 		res = obj.insert(intervals, newInterval);
-// 		for(int[] a: res) {
-// 			System.out.println(Arrays.toString(a));
-// 		}
-//
-// 		intervals = new int[][] {{1,5}};
-// 		newInterval = new int[] {2,7};
-// 		res = obj.insert(intervals, newInterval);
-// 		for(int[] a: res) {
-// 			System.out.println(Arrays.toString(a));
-// 		}
-//
-// 		intervals = new int[][] {{2,5},{6,7},{8,9}};
-// 		newInterval = new int[] {0,1};
-// 		res = obj.insert(intervals, newInterval);
-// 		for(int[] a: res) {
-// 			System.out.println(Arrays.toString(a));
-// 		}
-		
-		intervals = new int[][] {{3,5},{12,15}};
-		newInterval = new int[] {6,6};
-		int[][] res = obj.insert(intervals, newInterval);
-		for(int[] a: res) {
-			System.out.println(Arrays.toString(a));
-		}
+
+		int[][] intervals = {{1,3},{6,9}};
+		int[] newInterval = {2,5};
+
+		intervals = new int[][] {};
+		newInterval = new int[] {5,7};
+
+		intervals = new int[][] {{1,5}};
+		newInterval = new int[] {2,7};
+		System.out.println(Arrays.deepToString(obj.insert(intervals, newInterval)));
 	}
 }

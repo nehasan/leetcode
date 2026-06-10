@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../../../NODEJS/portfolio-nhasan"
+		},
+		{
+			"path": "../../../NODEJS/aps-example"
+		},
+		{
+			"path": "../../../REACT/contact-app"
+		},
+		{
+			"path": "../../../REACT/shore-test"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../NODEJS/web-socket-example"
+		}
+	],
+	"settings": {}
+}

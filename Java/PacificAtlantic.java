@@ -1,10 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PacificAtlantic {
-    public void flowsToBothOcean (int[][] heights, int rows, int cols, int i, int j, boolean[] oceanFlags) {
-        // System.out.println("I: " + i + " ROWS: " + rows + " J: " + j + " COLS: " + cols);
+    public void flowsToBothOcean(int[][] heights, int rows, int cols, int i, int j, boolean[] oceanFlags) {
+        // System.out.println("I: " + i + " ROWS: " + rows + " J: " + j + " COLS: " +
+        // cols);
         if (i >= 0 && i <= rows && j >= 0 && j <= cols) {
             if ((j - 1) < 0)
                 oceanFlags[0] = true;
@@ -35,7 +35,7 @@ public class PacificAtlantic {
 
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols; j++) {
-                boolean[] oceanFlags = new boolean[] {false, false};
+                boolean[] oceanFlags = new boolean[] { false, false };
                 flowsToBothOcean(heights, (numRows - 1), (numCols - 1), i, j, oceanFlags);
 
                 if (oceanFlags[0] && oceanFlags[1]) {
@@ -52,15 +52,15 @@ public class PacificAtlantic {
 
     public void func() {
         int[][] heights = new int[][] { { 1 } };
-//        heights = new int[][] {
-//                { 1, 2, 1 },
-//                { 2, 1, 2 },
-//                { 1, 2, 1 }
-//        };
+        // heights = new int[][] {
+        // { 1, 2, 1 },
+        // { 2, 1, 2 },
+        // { 1, 2, 1 }
+        // };
         System.out.println(pacificAtlantic(heights));
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         PacificAtlantic obj = new PacificAtlantic();
         obj.func();
     }

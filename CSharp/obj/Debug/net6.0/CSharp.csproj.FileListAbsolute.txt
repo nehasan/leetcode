@@ -1,0 +1,15 @@
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/bin/Debug/net6.0/CSharp
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/bin/Debug/net6.0/CSharp.deps.json
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/bin/Debug/net6.0/CSharp.runtimeconfig.json
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/bin/Debug/net6.0/CSharp.dll
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/bin/Debug/net6.0/CSharp.pdb
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/CSharp.csproj.AssemblyReference.cache
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/CSharp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/CSharp.AssemblyInfoInputs.cache
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/CSharp.AssemblyInfo.cs
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/CSharp.csproj.CoreCompileInputs.cache
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/CSharp.dll
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/refint/CSharp.dll
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/CSharp.pdb
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/CSharp.genruntimeconfig.cache
+/Users/nahidhasankhan/Projects/LEETCODE/leetcode/CSharp/obj/Debug/net6.0/ref/CSharp.dll
