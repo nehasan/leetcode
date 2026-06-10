@@ -3,71 +3,69 @@
 import java.util.*;
 
 class Pair {
-	public int height;
-	public int index;
+	int height;
+	int index;
 
-	Pair() {}
-	Pair(int height, int index) {
+	Pair () {}
+	Pair (int height, int index) {
 		this.height = height;
 		this.index = index;
 	}
 
 	public String toString() {
-		return this.height + " " + this.index;
+		return "(" + this.height + "," + this.index + ")";
 	}
 }
 
 class Solution {
-
 	/*
-	* Approach, using stack
-	* When we find a larger height we simply put that into the stack as a pair of (height, index)
-	* When we find a height lower than the prev height then we pop off the heights
-	* until we find a lower height. In this case the newly added height,index pair would be the
-	* current height and the index of the last popped index. This process indicates the current
-	* height can be extended further left till this index. However, within this process we calculate
-	* the maxArea = lastIndexHeight.height * (i - lastHeightIndex.index)
-	* After the original iteration stack will may have some heights which indicate that they can be
-	* extended to the right till the end.
-	* Now we take the outBoundIndex = heights.length and pop off each left height,index pair and 
-	* calculate the maxArea
-	* Time & Space complexity : O(n)
+	* Approach, using stack DS and finding the left and right limit of each bar
+	* In this approach we push a pair (height, index) to the stack
+	* When we find a height is bigger than the current one then we push it to the stack
+	* This means the prev height can be extended to the right upto this current hegiht
+	* When we find a height lower than the current one then we keep popping the left bigger
+	* ones until we find a lower one.
+	* This means the current height can be extended to the left just after that lowest height
+	* When popping the height we keep track of the last popped one to update the stack with the 
+	* current height as stack.push((current_height, last_popped_index))
+	* Also we keep measuring the maxArea while popping.
+	* And if the stack is not empty that means those heights can be extended to the further right
+	* While measuring the area for those heights we take outBoundIndex as heights.length
 	*/
 	public int largestRectangleArea(int[] heights) {
 		Stack<Pair> heightIndexStack = new Stack<>();
 		int maxArea = Integer.MIN_VALUE;
 
-		heightIndexStack.add(new Pair(heights[0], 0));
+		heightIndexStack.push(new Pair(heights[0], 0));
 		for (int i = 1; i < heights.length; i++) {
 			if (heights[i] <= heights[i - 1]) {
-				Pair lastHeightIndex = new Pair(-1, -1);
+				// current height is lower than the prev one
+				// need to pop the stack until a lower one is found
+				Pair lastHeightIndex = null, prevLastHeightIndex = null;
 				while(true) {
 					if (heightIndexStack.isEmpty()) {
-						lastHeightIndex.index = -1;
+						prevLastHeightIndex.index = 0;
 						break;
 					}
 					lastHeightIndex = heightIndexStack.peek();
-					maxArea = Math.max(maxArea, (lastHeightIndex.height  * (i - lastHeightIndex.index)));
 					if (lastHeightIndex.height < heights[i]) {
 						break;
 					}
-					heightIndexStack.pop();
+					maxArea = Math.max(maxArea, ((i - lastHeightIndex.index) * lastHeightIndex.height));
+					prevLastHeightIndex = heightIndexStack.pop();
 				}
 
-				System.out.println("lastHeightIndex here " + lastHeightIndex);
-				heightIndexStack.push(new Pair(heights[i], lastHeightIndex.index + 1));
+				heightIndexStack.push(new Pair(heights[i], prevLastHeightIndex.index));
 			} else {
-				heightIndexStack.add(new Pair(heights[i], i));
+				// current height is greater than the prev one
+				heightIndexStack.push(new Pair(heights[i], i));
 			}
 		}
 
-		System.out.println("current heightIndexStack " + heightIndexStack);
-
 		int outBoundIndex = heights.length;
-		while (!heightIndexStack.isEmpty()) {
-			Pair lastHeightIndex = heightIndexStack.pop();
-			System.out.println("lastHeightIndex " + lastHeightIndex);
-			maxArea = Math.max(maxArea, (lastHeightIndex.height  * (outBoundIndex - lastHeightIndex.index)));
+		while(!heightIndexStack.isEmpty()) {
+			Pair heightIndex = heightIndexStack.pop();
+			maxArea = Math.max(maxArea, ((outBoundIndex - heightIndex.index) * heightIndex.height));
 		}
 
 		return maxArea;
@@ -80,12 +78,12 @@ class Main {
 		Solution obj = new Solution();
 
 		// int[] heights = {2,1,5,6,2,3};
-		// int[] heights = {2,1,6,6,2,3};
-		// int[] heights = {2,4};
-		// int[] heights = {3,6,5,7,4,8,1,0};
+		int[] heights = {2,1,6,6,2,3};
 		// int[] heights = {1,1};
+		// int[] heights = {2,4};
 		// int[] heights = {2,1,2};
-		int[] heights = {4,2,0,3,2,5};
+		// int[] heights = {3,6,5,7,4,8,1,0};
+		// int[] heights = {4,2,0,3,2,5};
 		System.out.println(obj.largestRectangleArea(heights));
 	}
 }
